@@ -6,6 +6,8 @@ var AttendeeList  = require('./AttendeeList');
 var AttendeeView =  require('./AttendeeView');
 var AddAttendeeControl = require('./AddAttendeeControl');
 var NewAttendeeView = require('./NewAttendeeView');
+var _ = require('underscore');
+
 var Guests=
     [
       {
@@ -35,7 +37,7 @@ Guests.getSelectedValue = function (email) {
     var selectedGuest =  null;
 
     if(email){
-        selectedGuest =  this.find(function(item) {
+        selectedGuest =  _.find(function(item) {
             if (item.email === email) {
                 return item;
             }
@@ -49,7 +51,6 @@ Guests.getSelectedValue = function (email) {
 // CSS
 require('normalize.css');
 require('../styles/main.css');
-//require('react-bootstrap');
 
 var AttendeeListComponent =  React.createClass({
    render: function(){
@@ -77,41 +78,50 @@ var AttendeeListComponent =  React.createClass({
 
 var AttendeeListApp = React.createClass({
     getInitialState: function () {
-        return {
+        //return {
+        //    //guests: this.props.guests,
+        //    selectedValue: null,
+        //    showNewForm : null
+        //};
+        return _.extend({
             guests: this.props.guests,
-            selectedValue: null,
-            showNewForm : null
-        };
+            showNewForm : false,
+            selectedGuest: null
+        },this.props.guests);
     },
 
     selectAttendee : function(child){
-//        this.setState({selectedValue: child});
-        this.setState({showNewForm:false});
+        var newVal =  this.state.guests.getSelectedValue(child.email);
+        this.setState({showNewForm : false, selectedGuest:newVal.selectedGuest });
+        //this.setState({showNewForm:false});
 
-        console.log(child.name);
     },
     displayNewAttendeeForm: function (e) {
         console.log("need to show a new form");
-        this.setState({showNewForm:true});
+        this.setState({showNewForm : true, selectedGuest:null});
+
+    },
+    componentDidMount: function() {
+        this.setState(this.getInitialState());
     },
   render: function() {
       //var guestArray =  Array.prototype.slice.call(this.state.guests);
       //console.log(guestArray.constructor);
-      var component = this.state.guests.forEach(function (item){
-          if(this.state.selectedValue) {
-              if(item.email === this.state.selectedValue.email) {
-                  return (
-                      <AttendeeView content ={this.state.selectedValue}/>
-                  );
-              }
-          }
+      //var component = this.state.guests.forEach(function (item){
+      //    if(this.state.selectedValue) {
+      //        if(item.email === this.state.selectedValue.email) {
+      //            return (
+      //                <AttendeeView content ={this.state.selectedValue}/>
+      //            );
+      //        }
+      //    }
 
           //return (
           //    <div>
           //        <h1><span class="label label-default">Please select an Attendee. </span></h1>
           //    </div>
           //);
-      }.bind(this));
+      //}.bind(this));
 
       return (
           <div className="container-fluid" >
@@ -122,7 +132,7 @@ var AttendeeListApp = React.createClass({
                   <AddAttendeeControl showNewAttendeeForm={this.displayNewAttendeeForm}/>
                   <div className="row">
                       <div className="col-md-4">
-                          <AttendeeList data={this.props.guests} select={this.selectAttendee}  />
+                          <AttendeeList data={this.state.guests} select={this.selectAttendee}  />
                       </div >
                       <div className="col-md-8" hidden={this.state.showNewForm}>
                           <AttendeeView content ={Guests[2]}/>
