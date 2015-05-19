@@ -43,21 +43,6 @@ Guests.findAttendingWith=  function(attendee){
     return{ result: result };
 
 };
-//Guests.getSelectedValue = function (email) {
-//    var selectedGuest =  null;
-//
-//    if(email){
-//        selectedGuest =  _.find(function(item) {
-//            if (item.email === email) {
-//                return item;
-//            }
-//        });
-//    }
-//
-//    return {
-//        selectedGuest : selectedGuest
-//    } ;
-//};
 // CSS
 require('normalize.css');
 require('../styles/main.css');
@@ -80,7 +65,6 @@ var AttendeePanel =  React.createClass({
        );
    }
 });
-
 
 var AttendeeListApp = React.createClass({
     getInitialState: function () {

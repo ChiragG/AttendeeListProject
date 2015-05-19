@@ -25,12 +25,12 @@ var MealsControl = React.createClass({
 
         return (
             <div>
-                        <span>
-                            <a href="#" onClick={this.handleMealsClick}>Meals:</a>
-                        </span>
-                        <span>
-                            <input type="text" value={valueLink.value} onChange={handleChange} className="form-control" ref="mealsInput"/>
-                        </span>
+                <span>
+                    <a href="#" onClick={this.handleMealsClick}>Meals:</a>
+                </span>
+                <span>
+                    <input type="text" value={valueLink.value} onChange={handleChange} className="form-control" ref="mealsInput"/>
+                </span>
             </div>
         );
     }
@@ -39,7 +39,6 @@ var MealsControl = React.createClass({
 
 
 var AttendeeView = React.createClass({
-  //mixins: [],
       getInitialState: function() { return(
       {
           name:"",
@@ -47,17 +46,9 @@ var AttendeeView = React.createClass({
           tags:[]
       });
   },
-  //getDefaultProps: function() {},
-  //componentWillMount: function() {},
-  //componentDidMount: function() {},
-  //shouldComponentUpdate: function() {},
-  //componentDidUpdate: function() {},
-  //componentWillUnmount: function() {},
-
   render: function () {
       if(this.props.content){
           return (
-
               <div className="panel panel-primary">
                   <div className="panel panel-heading">
                       Attendee Info
@@ -83,14 +74,11 @@ var AttendeeView = React.createClass({
           );              
       }
       return(
-          <div>
-              <h1><span className="label label-default">Please select an Attendee. </span></h1>
-          </div>
-              
+              <div>
+                  <h1><span className="label label-default">Please select an Attendee. </span></h1>
+              </div>
           );
-    
   }
 });
 
-module.exports = AttendeeView; 
-
+module.exports = AttendeeView;

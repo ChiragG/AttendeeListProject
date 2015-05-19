@@ -23,7 +23,6 @@ var AttendeeList = React.createClass({
         var items = this.state.attendees;
         this.props.select(items[i]);
         var val =  this.state.attendees.findAttendingWith(items[i]);
-        console.log(val.result);
         this.setState({selectedValue: items[i], attendingWith:val.result});
     },
     componentDidMount: function() {
@@ -38,13 +37,9 @@ var AttendeeList = React.createClass({
                 if(this.state.selectedValue.name === item.name) {
                     highlight = true;
                 }
-
-
             }
             if(this.state.attendingWith.length >0 ){
-                console.log(1 + this.state.attendingWith);
                 if(_.contains(this.state.attendingWith,item.email)){
-                    console.log(2);
                     attendingWith = true;
                 }
             }
@@ -63,5 +58,4 @@ var AttendeeList = React.createClass({
     }
 });
 
-module.exports = AttendeeList; 
-
+module.exports = AttendeeList;
