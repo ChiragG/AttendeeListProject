@@ -33,43 +33,39 @@ var Guests=
       }
     ];
 
-Guests.getSelectedValue = function (email) {
-    var selectedGuest =  null;
-
-    if(email){
-        selectedGuest =  _.find(function(item) {
-            if (item.email === email) {
-                return item;
-            }
-        });
-    }
-
-    return {
-        selectedGuest : selectedGuest
-    } ;
-};
+//Guests.getSelectedValue = function (email) {
+//    var selectedGuest =  null;
+//
+//    if(email){
+//        selectedGuest =  _.find(function(item) {
+//            if (item.email === email) {
+//                return item;
+//            }
+//        });
+//    }
+//
+//    return {
+//        selectedGuest : selectedGuest
+//    } ;
+//};
 // CSS
 require('normalize.css');
 require('../styles/main.css');
 
-var AttendeeListComponent =  React.createClass({
-   render: function(){
+var AttendeePanel =  React.createClass({
+
+    render: function(){
        return (
-           <div className="container-fluid">
-               <ReactTransitionGroup transitionName="fade">
-                   <div className="jumbotron">
-                       <h2> Attendee List Application </h2>
-                   </div>
-                   <AddAttendeeControl/>
-                   <div className="row">
-                       <div className="col-md-4">
-                           <AttendeeList data={this.props.guests} select={this.selectAttendee}  />
-                       </div >
-                       <div className="col-md-8">
-                           <AttendeeView content ={this.props.selectedValue}/>
-                       </div>
-                   </div>
-               </ReactTransitionGroup>
+           <div className="row">
+               <div className="col-md-4">
+                   <AttendeeList data={this.props.guests} select={this.props.selectAttendeeHandler}  />
+               </div >
+               <div className="col-md-8" hidden={this.props.show}>
+                   <AttendeeView content={this.props.selectedGuest}/>
+               </div>
+               <div className="col-md-8" hidden={!this.props.show}>
+                   <NewAttendeeView/>
+               </div>
            </div>
        );
    }
@@ -78,21 +74,24 @@ var AttendeeListComponent =  React.createClass({
 
 var AttendeeListApp = React.createClass({
     getInitialState: function () {
-        //return {
-        //    //guests: this.props.guests,
-        //    selectedValue: null,
-        //    showNewForm : null
-        //};
-        return _.extend({
+        console.log("setting initial state");
+        return{
             guests: this.props.guests,
             showNewForm : false,
             selectedGuest: null
-        },this.props.guests);
+        };
     },
 
     selectAttendee : function(child){
-        var newVal =  this.state.guests.getSelectedValue(child.email);
-        this.setState({showNewForm : false, selectedGuest:newVal.selectedGuest });
+        console.log(child);
+      if(child){
+          var newVal =  child;
+
+          console.log(newVal.name);
+          console.log(this);
+          this.setState({showNewForm : false, selectedGuest:newVal});
+      }
+
         //this.setState({showNewForm:false});
 
     },
@@ -101,46 +100,36 @@ var AttendeeListApp = React.createClass({
         this.setState({showNewForm : true, selectedGuest:null});
 
     },
+
     componentDidMount: function() {
-        this.setState(this.getInitialState());
+        console.log("Mounted App");
+        //this.setState(this.getInitialState());
     },
+    componentWillUnmount: function() {
+        console.log("Will UnMount");
+    },
+    componentDidUpdate: function() {
+        console.log("Did Update");
+    },
+    //shouldComponentUpdate: function() {
+    //    console.log("Should comp update");
+    //},
+    componentWillMount: function() {
+        console.log("Comp will mount");
+    },
+
   render: function() {
-      //var guestArray =  Array.prototype.slice.call(this.state.guests);
-      //console.log(guestArray.constructor);
-      //var component = this.state.guests.forEach(function (item){
-      //    if(this.state.selectedValue) {
-      //        if(item.email === this.state.selectedValue.email) {
-      //            return (
-      //                <AttendeeView content ={this.state.selectedValue}/>
-      //            );
-      //        }
-      //    }
-
-          //return (
-          //    <div>
-          //        <h1><span class="label label-default">Please select an Attendee. </span></h1>
-          //    </div>
-          //);
-      //}.bind(this));
-
       return (
+
           <div className="container-fluid" >
               <ReactTransitionGroup transitionName="fade">
                   <div className="jumbotron">
                       <h2> Attendee List Application </h2>
                   </div>
                   <AddAttendeeControl showNewAttendeeForm={this.displayNewAttendeeForm}/>
-                  <div className="row">
-                      <div className="col-md-4">
-                          <AttendeeList data={this.state.guests} select={this.selectAttendee}  />
-                      </div >
-                      <div className="col-md-8" hidden={this.state.showNewForm}>
-                          <AttendeeView content ={Guests[2]}/>
-                      </div>
-                      <div className="col-md-8" hidden={!this.state.showNewForm}>
-                          <NewAttendeeView/>
-                      </div>
-                  </div>
+                  <AttendeePanel show={this.state.showNewForm} selectAttendeeHandler={this.selectAttendee}
+                                         guests={this.state.guests}
+                                         selectedGuest={this.state.selectedGuest} />
               </ReactTransitionGroup>
           </div>
     );

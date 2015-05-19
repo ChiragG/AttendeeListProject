@@ -24,6 +24,7 @@ var NewAttendeeView = React.createClass({
 
   render: function () {
     return (
+        <form>
         <div className="panel panel-primary">
           <div className="panel panel-heading">
             Attendee Info
@@ -48,6 +49,7 @@ var NewAttendeeView = React.createClass({
           </div>
 
         </div>
+            </form>
     );
   }
 });

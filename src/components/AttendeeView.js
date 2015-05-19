@@ -84,7 +84,7 @@ var AttendeeView = React.createClass({
       }
       return(
           <div>
-              <h1><span class="label label-default">Please select an Attendee. </span></h1>
+              <h1><span className="label label-default">Please select an Attendee. </span></h1>
           </div>
               
           );

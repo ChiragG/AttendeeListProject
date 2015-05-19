@@ -10,18 +10,21 @@ var AttendeeList = React.createClass({
     propTypes: {
         data: React.PropTypes.array.isRequired
     },
+
     getInitialState: function () {
         console.log(this.props.data.constructor);
         return {
-
             attendees: this.props.data,
             selectedValue: null
         };
     },
     selectedHandler: function (i) {
         var items = this.state.attendees;
+        this.props.select(items[i]);
         this.setState({selectedValue: items[i]});
-
+    },
+    componentDidMount: function() {
+        console.log("Mounted AttendeeList");
     },
     render: function (){
         //var selectedHandler = this.props.select;
@@ -30,7 +33,6 @@ var AttendeeList = React.createClass({
             if(this.state.selectedValue) {
                 if(this.state.selectedValue.name === item.name) {
                     highlight = true;
-                    this.props.select(item);
                 }
             }
             return (
