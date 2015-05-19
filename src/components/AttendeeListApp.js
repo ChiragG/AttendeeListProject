@@ -32,7 +32,17 @@ var Guests=
         "meal": "fish"
       }
     ];
+Guests.findAttendingWith=  function(attendee){
+    var allEmails= this.map(function (item){
+        if(item.email !== attendee.email){
+            return item.email;
+        }
+    });
+    var result = _.intersection(allEmails,attendee.attendingWith);
 
+    return{ result: result };
+
+};
 //Guests.getSelectedValue = function (email) {
 //    var selectedGuest =  null;
 //

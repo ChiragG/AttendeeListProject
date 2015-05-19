@@ -16,7 +16,10 @@ var AttendeeSimple = React.createClass({
   //componentWillUnmount: function() {},
 
   render: function () {
-    var cssClass = this.props.highlighted ? "list-group-item active" : "list-group-item";
+      console.log(this.props.highlighted + " High " + this.props.attendingWith + "aatt");
+    var cssClass = this.props.highlighted ? "list-group-item active" :
+                                            this.props.attendingWith ? "list-group-item list-group-item-success" :
+                                                "list-group-item";
     return (
           <a href="#" className={cssClass} onClick={this.props.selected}>
             {this.props.content.name}
