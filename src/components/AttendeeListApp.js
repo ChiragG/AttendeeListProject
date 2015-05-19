@@ -83,27 +83,19 @@ var AttendeeListApp = React.createClass({
     },
 
     selectAttendee : function(child){
-        console.log(child);
       if(child){
           var newVal =  child;
-
-          console.log(newVal.name);
           console.log(this);
           this.setState({showNewForm : false, selectedGuest:newVal});
       }
-
-        //this.setState({showNewForm:false});
-
     },
     displayNewAttendeeForm: function (e) {
         console.log("need to show a new form");
         this.setState({showNewForm : true, selectedGuest:null});
-
     },
 
     componentDidMount: function() {
         console.log("Mounted App");
-        //this.setState(this.getInitialState());
     },
     componentWillUnmount: function() {
         console.log("Will UnMount");
@@ -111,9 +103,6 @@ var AttendeeListApp = React.createClass({
     componentDidUpdate: function() {
         console.log("Did Update");
     },
-    //shouldComponentUpdate: function() {
-    //    console.log("Should comp update");
-    //},
     componentWillMount: function() {
         console.log("Comp will mount");
     },
@@ -127,9 +116,10 @@ var AttendeeListApp = React.createClass({
                       <h2> Attendee List Application </h2>
                   </div>
                   <AddAttendeeControl showNewAttendeeForm={this.displayNewAttendeeForm}/>
-                  <AttendeePanel show={this.state.showNewForm} selectAttendeeHandler={this.selectAttendee}
-                                         guests={this.state.guests}
-                                         selectedGuest={this.state.selectedGuest} />
+                  <AttendeePanel show={this.state.showNewForm}
+                                 selectAttendeeHandler={this.selectAttendee}
+                                 guests={this.state.guests}
+                                 selectedGuest={this.state.selectedGuest} />
               </ReactTransitionGroup>
           </div>
     );
