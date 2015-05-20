@@ -9,6 +9,7 @@ var AttendeeSimple = React.createClass({
     var cssClass = this.props.highlighted ? "list-group-item active" :
                                             this.props.attendingWith ? "list-group-item list-group-item-success" :
                                                 "list-group-item";
+      cssClass = this.props.highlightMealAttendee ? "list-group-item list-group-item-warning" :cssClass;
     return (
           <a href="#" className={cssClass} onClick={this.props.selected}>
             {this.props.content.name}
@@ -17,5 +18,5 @@ var AttendeeSimple = React.createClass({
   }
 });
 
-module.exports = AttendeeSimple; 
+module.exports = AttendeeSimple;
 

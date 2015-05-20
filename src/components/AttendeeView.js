@@ -6,47 +6,62 @@ var AttendingWithList = require('./AttendingWithList');
 require('styles/AttendeeView.sass');
 
 var MealsControl = React.createClass({
-    mixins: [React.addons.LinkedStateMixin],
 
     getInitialState: function () {
         return {
             newValue: this.props.meal
         };
     },
-
+    handleChange: function(e){
+        this.setState({newValue: e.target.value});
+    },
     handleMealsClick : function(e){
+        //console.log(this.linkState('newValue').value);
+        var val = React.findDOMNode(this.refs.mealsInput).value;
+        this.props.mealClick(val);
+    },
+    componentDidMount: function() {
+        this.setState({newValue: this.props.meal});
 
     },
-    render: function(){
-        var valueLink = this.linkState('newValue');
-        var handleChange = function(e) {
-            valueLink.requestChange(e.target.value);
-        };
 
+    render: function(){
         return (
             <div>
                 <span>
                     <a href="#" onClick={this.handleMealsClick}>Meals:</a>
                 </span>
                 <span>
-                    <input type="text" value={valueLink.value} onChange={handleChange} className="form-control" ref="mealsInput"/>
+                    <input type="text" value={this.props.meal} onChange={this.handleChange} className="form-control" ref="mealsInput"/>
                 </span>
             </div>
         );
     }
-
 });
 
 
 var AttendeeView = React.createClass({
-      getInitialState: function() { return(
-      {
-          name:"",
-          email:"",
-          tags:[]
-      });
-  },
-  render: function () {
+
+    getInitialState: function() {
+
+        return(
+          {
+              name:"",
+              email:"",
+              tags:[]
+          });
+    },
+    componentWillMount: function() {
+    },
+
+    componentDidMount: function() {
+    },
+    componentWillUnmount: function() {
+    },
+    componentDidUpdate: function() {
+    },
+
+    render: function () {
       if(this.props.content){
           return (
               <div className="panel panel-primary">
@@ -68,10 +83,10 @@ var AttendeeView = React.createClass({
                       <p/>
                         <TagList data={this.props.content.tags} displayName="Tags"/>
                       <p/>
-                      <MealsControl meal={this.props.content.meal} />
+                      <MealsControl meal={this.props.content.meal} mealClick={this.props.mealClickedHandler}/>
                   </div>
               </div>
-          );              
+          );
       }
       return(
               <div>

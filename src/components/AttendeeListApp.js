@@ -48,15 +48,22 @@ require('normalize.css');
 require('../styles/main.css');
 
 var AttendeePanel =  React.createClass({
-
+    getInitialState : function(){
+        return {
+            mealSelected :""
+        };
+    },
+    mealsClicked: function(meal){
+        this.setState({mealSelected:meal});
+    },
     render: function(){
        return (
            <div className="row">
                <div className="col-md-4">
-                   <AttendeeList data={this.props.guests} select={this.props.selectAttendeeHandler}  />
+                   <AttendeeList data={this.props.guests} select={this.props.selectAttendeeHandler} mealSelected={this.state.mealSelected} />
                </div >
                <div className="col-md-8" hidden={this.props.show}>
-                   <AttendeeView content={this.props.selectedGuest}/>
+                   <AttendeeView content={this.props.selectedGuest} mealClickedHandler={this.mealsClicked}/>
                </div>
                <div className="col-md-8" hidden={!this.props.show}>
                    <NewAttendeeView/>
@@ -68,7 +75,6 @@ var AttendeePanel =  React.createClass({
 
 var AttendeeListApp = React.createClass({
     getInitialState: function () {
-        console.log("setting initial state");
         return{
             guests: this.props.guests,
             showNewForm : false,
@@ -88,18 +94,6 @@ var AttendeeListApp = React.createClass({
         this.setState({showNewForm : true, selectedGuest:null});
     },
 
-    componentDidMount: function() {
-        console.log("Mounted App");
-    },
-    componentWillUnmount: function() {
-        console.log("Will UnMount");
-    },
-    componentDidUpdate: function() {
-        console.log("Did Update");
-    },
-    componentWillMount: function() {
-        console.log("Comp will mount");
-    },
 
   render: function() {
       return (

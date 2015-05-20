@@ -16,7 +16,8 @@ var AttendeeList = React.createClass({
         return {
             attendees: this.props.data,
             selectedValue: null,
-            attendingWith: []
+            attendingWith: [],
+            mealSelected: ''
         };
     },
     selectedHandler: function (i) {
@@ -29,10 +30,11 @@ var AttendeeList = React.createClass({
         console.log("Mounted AttendeeList");
     },
     render: function (){
-        //var selectedHandler = this.props.select;
+        console.log("Here Now AttendeeList " +this.state.mealSelected);
         var items = this.state.attendees.map(function(item,i) {
             var highlight =false;
             var attendingWith = false;
+            var highlightAttendeeWithSameMeal = false;
             if(this.state.selectedValue) {
                 if(this.state.selectedValue.name === item.name) {
                     highlight = true;
@@ -43,11 +45,17 @@ var AttendeeList = React.createClass({
                     attendingWith = true;
                 }
             }
+            if(this.state.mealSelected){
+                if(this.state.mealSelected === item.meal){
+                    highlightAttendeeWithSameMeal = true;
+                }
+            }
             return (
                 <AttendeeSimple content={item} key={item.name}
                                 selected={this.selectedHandler.bind(this, i) }
                                 highlighted={highlight}
-                                attendingWith={attendingWith}/>
+                                attendingWith={attendingWith}
+                                highlightMealAttendee={highlightAttendeeWithSameMeal}/>
             );
         }.bind(this));
         return (
